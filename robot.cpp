@@ -30,13 +30,87 @@ Node *buildRobot(){
 		200.0f, 300.0f, 100.0f,
 		0.0f, 0.0f, 0.0f,
 		0.0f, 0.0f, 0.0f);
+
 	
-	Node *leftupperarm = new Node(-200.0f, 0.0f, 0.0f, 
-		50.0f, 100.0f, 50.0f, 
-		200.0f, 200.0f, 20.0f, 
+	// XXX: implement more body/robot/whatever parts here
+
+	Node *rightupperarm = new Node(180.0f, 50.0f, 0.0f,
+		50.0f, 120.0f, 50.0f,
+		0.0f, 80.0f, 0.0f,
+		0.0f, 0.0f, 0.0f);
+	rightupperarm->setParent(torso);
+
+	Node *rightlowerarm = new Node(0.0f, -120.0f, 0.0f,
+		50.0f, 80.0f, 50.0f,
+		0.0f, 50.0f, 0.0f,
+		0.0f, 0.0f, 0.0f);
+	rightlowerarm->setParent(rightupperarm);
+
+	Node *righthand = new Node(0.0f, -100.0f, 0.0f,
+		70.0f, 50.0f, 20.0f,
+		0.0f, 50.0f, 0.0f,
+		0.0f, 0.0f, 0.0f);
+	righthand->setParent(rightlowerarm);
+
+	Node *leftupperarm = new Node(-180.0f, 50.0f, 0.0f,
+		50.0f, 120.0f, 50.0f,
+		0.0f, 80.0f, 0.0f,
 		0.0f, 0.0f, 0.0f);
 	leftupperarm->setParent(torso);
-	// XXX: implement more body/robot/whatever parts here
+
+	Node *leftlowerarm = new Node(0.0f, -120.0f, 0.0f,
+		50.0f, 80.0f, 50.0f,
+		0.0f, 50.0f, 0.0f,
+		0.0f, 0.0f, 0.0f);
+	leftlowerarm->setParent(leftupperarm);
+	
+	Node *lefthand = new Node(0.0f, -100.0f, 0.0f,
+		70.0f, 50.0f, 20.0f,
+		0.0f, 50.0f, 0.0f,
+		0.0f, 0.0f, 0.0f);
+	lefthand->setParent(leftlowerarm);
+
+	Node *rightupperleg = new Node(50.0f, -250.0f, 0.0f,
+		60.0f, 150.0f, 60.0f,
+		0.0f, 80.0f, 0.0f,
+		0.0f, 0.0f, 0.0f);
+	rightupperleg->setParent(torso);
+
+	Node *rightlowerleg = new Node(0.0f, -150.0f, 0.0f,
+		60.0f, 120.0f, 60.0f,
+		0.0f, 70.0f, 0.0f,
+		0.0f, 0.0f, 0.0f);
+	rightlowerleg->setParent(rightupperleg);
+
+	Node *rightfoot = new Node(0.0f, -100.0f, 25.0f,
+		50.0f, 20.0f, 100.0f,
+		0.0f, 0.0f, -25.0f,
+		0.0f, 0.0f, 0.0f);
+	rightfoot->setParent(rightlowerleg);
+
+	Node *leftupperleg = new Node(-50.0f, -250.0f, 0.0f,
+		60.0f, 150.0f, 60.0f,
+		0.0f, 80.0f, 0.0f,
+		0.0f, 0.0f, 0.0f);
+	leftupperleg->setParent(torso);
+
+	Node *leftlowerleg = new Node(0.0f, -150.0f, 0.0f,
+		60.0f, 120.0f, 60.0f,
+		0.0f, 70.0f, 0.0f,
+		0.0f, 0.0f, 0.0f);
+	leftlowerleg->setParent(leftupperleg);
+
+	Node *leftfoot = new Node(0.0f, -100.0f, 25.0f,
+		50.0f, 20.0f, 100.0f,
+		0.0f, 0.0f, -25.0f,
+		0.0f, 0.0f, 0.0f);
+	leftfoot->setParent(leftlowerleg);
+
+	Node *head = new Node(0.0f, 250.0f, 0.0f,
+		150.0f, 150.0f, 150.0f,
+		0.0f, -100.0f, 0.0f,
+		0.0f, 0.0f, 0.0f);
+	head->setParent(torso);
 
 	// INSERT YOUR CODE HERE
 

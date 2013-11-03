@@ -89,7 +89,7 @@ void Node::transform(){
 	// translate to final position
 	// XXX
 	glTranslatef(this->x, this->y, this->z);
-
+	
 	// INSERT YOUR CODE HERE
 
 	// END XXX
@@ -103,17 +103,19 @@ void Node::transform(){
 
 	// apply this node's rotation
 	// XXX 
-	glRotatef(0.0f, this->rotx, this->roty, this->rotz);
+	glRotatef(this->rotx, 1.0f, 0.0f, 0.0f);
+	glRotatef(this->roty, 0.0f, 1.0f, 0.0f);
+	glRotatef(this->rotz, 0.0f, 0.0f, 1.0f);
 	// INSERT YOUR CODE HERE
 
-	// END XXX
+	// END XXX	
 
 	// draw Joint (rotation center)
 	drawJoint();
 
 	// translate center of rotation into limb's origin
 	// XXX
-	glTranslatef(this->jointx, this->jointy, this->jointz);
+	glTranslatef(-this->jointx, -this->jointy, -this->jointz);
 	// INSERT YOUR CODE HERE
 	// END XXX
 }
@@ -153,9 +155,9 @@ void Node::drawJoint(){
 	// draw a sphere at center of rotation
 	// (with glutwiredphere...)
 	// XXX
-	const GLfloat linelength = 400.0f;
+	const GLfloat linelength = 100.0f;
 
-	glutWireSphere((GLdouble)(linelength / 2.0f), 20, 20);
+	glutWireSphere((GLdouble)(linelength / 2.0f), 12, 12);
 	// INSERT YOUR CODE HERE
 
 	// END XXX

@@ -145,8 +145,8 @@ void SceneGraph::reset(Node* node){
 	node->rotx = 0.0f;
 	node->roty = 0.0f;
 	node->rotz = 0.0f;
-	SceneGraph::reset(node->getChild());
-	SceneGraph::reset(node->getNext());
+	SceneGraph::reset(node->getChild()); //Recursively set all rotation vectors to zero
+	SceneGraph::reset(node->getNext()); //Null test is done above
 	// INSERT YOUR CODE HERE
 
 	// END XXX
