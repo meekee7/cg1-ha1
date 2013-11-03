@@ -4,8 +4,8 @@
    version:	   SKELETON CODE
    TODO:           buildRobot
    author:         katrin lang
-		   computer graphics
-		   tu berlin
+   computer graphics
+   tu berlin
    ------------------------------------------------------------- */
 
 #include "robot.h"
@@ -22,31 +22,36 @@
 
 // build the robot scenegraph
 Node *buildRobot(){
-  
-  // torso attributes and initial position.
-  // for parameters of constructor and their meanings,
-  // see file node.h
-  Node *torso= new Node(0, 0, 0,
-			200, 300, 100,
-			0, 0, 0,
-			0, 0, 0);
-  
-  // XXX: implement more body/robot/whatever parts here
-  
-  // INSERT YOUR CODE HERE
 
-  // END XXX
-  
-  // finally, attach the robot/model parts
-  // example: leftArm->setParent(torso), etc...
-  // BUILD THE SCENEGRAPH
-  
-  // XXX: attach body parts here
+	// torso attributes and initial position.
+	// for parameters of constructor and their meanings,
+	// see file node.h
+	Node *torso = new Node(0.0f, 0.0f, 0.0f,
+		200.0f, 300.0f, 100.0f,
+		0.0f, 0.0f, 0.0f,
+		0.0f, 0.0f, 0.0f);
+	
+	Node *leftupperarm = new Node(-200.0f, 0.0f, 0.0f, 
+		50.0f, 100.0f, 50.0f, 
+		200.0f, 200.0f, 20.0f, 
+		0.0f, 0.0f, 0.0f);
+	leftupperarm->setParent(torso);
+	// XXX: implement more body/robot/whatever parts here
 
-  // INSERT YOUR CODE HERE
-  
-  // END XXX
-  
-  // return root node
-  return torso;
+	// INSERT YOUR CODE HERE
+
+	// END XXX
+
+	// finally, attach the robot/model parts
+	// example: leftArm->setParent(torso), etc...
+	// BUILD THE SCENEGRAPH
+
+	// XXX: attach body parts here
+
+	// INSERT YOUR CODE HERE
+
+	// END XXX
+
+	// return root node
+	return torso;
 }

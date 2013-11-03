@@ -4,8 +4,8 @@
    version:	   SKELETON CODE
    TODO:           traverse reset
    author:         katrin lang
-		   computer graphics
-		   tu berlin
+   computer graphics
+   tu berlin
    ------------------------------------------------------------- */
 
 #include <iostream>
@@ -22,114 +22,114 @@
 // without this line, 
 // printline debugging won't work
 using namespace std;
- 
+
 // this is our scenegraph
 SceneGraph *sceneGraph;
 
 SceneGraph::SceneGraph(Node *root) : root(root), selected(root) {
-  selected->select();
+	selected->select();
 }
 
 SceneGraph::~SceneGraph(){
-  clear(root);
+	clear(root);
 }
 
 // traverse and draw the scenegraph
 // nothing to do here
 // (see helper function)
 void SceneGraph::traverse(){
-  traverse(root);
+	traverse(root);
 }
 
 // reset all rotations in the scenegraph
 // nothing to do here
 // (see helper function)
 void SceneGraph::reset(){
-  reset(root);
+	reset(root);
 }
 
 // navigation in tree
 // (needed for node selection)
 void SceneGraph::up(){
-  if(selected->getParent() == NULL) return;
-    selected->deselect();
-    selected= selected->getParent();
-    selected->select();
+	if (selected->getParent() == NULL) return;
+	selected->deselect();
+	selected = selected->getParent();
+	selected->select();
 }
 void SceneGraph::down(){
-  if(selected->getChild() == NULL) return;
-    selected->deselect();
-    selected= selected->getChild();
-    selected->select();
+	if (selected->getChild() == NULL) return;
+	selected->deselect();
+	selected = selected->getChild();
+	selected->select();
 }
 void SceneGraph::left(){
-  if(selected->getPrevious() == NULL) return;
-  selected->deselect();
-  selected= selected->getPrevious();
-  selected->select();
+	if (selected->getPrevious() == NULL) return;
+	selected->deselect();
+	selected = selected->getPrevious();
+	selected->select();
 }
-void SceneGraph::right(){ 
-  if(selected->getNext() == NULL) return;
-  selected->deselect();
-  selected= selected->getNext();
-  selected->select();
+void SceneGraph::right(){
+	if (selected->getNext() == NULL) return;
+	selected->deselect();
+	selected = selected->getNext();
+	selected->select();
 }
 
 // increment / decrement rotation of selected node
 void SceneGraph::rotate(float x, float y, float z){
-  selected->rotate(x, y, z);
+	selected->rotate(x, y, z);
 }
 
 // traverse and draw the scenegraph from a given node
 // XXX: NEEDS TO BE IMPLEMENTED
 void SceneGraph::traverse(Node *node){
 
-  if(node == NULL) return;
+	if (node == NULL) return;
 
-  // store current modelview (transformation) matrix
-  // XXX
-  //glPushMatrix();
-  // INSERT YOUR CODE HERE
-  
-  // END XXX
-  
-  // apply local transformation
-  node->transform();
-  // draw the current node
-  node->draw();
+	// store current modelview (transformation) matrix
+	// XXX
 
-  // continue concatenating transformations
-  // if this node has children
-  // XXX  
+	// INSERT YOUR CODE HERE
+	glPushMatrix();
+	// END XXX
 
-  // INSERT YOUR CODE HERE
+	// apply local transformation
+	node->transform();
+	// draw the current node
+	node->draw();
 
-  // END XXX
-  
-  // after this scenegraph branch
-  // restore previous transformation
-  // XXX
-  //glPopMatrix();
-  // INSERT YOUR CODE HERE
-  
-  // END XXX
-  
-  // and traverse possible siblings
-  // XXX
-  
-  // INSERT YOUR CODE HERE
-  
-  // END XXX
+	// continue concatenating transformations
+	// if this node has children
+	// XXX  
+
+	SceneGraph::traverse(node->getChild()); //Null test at top already
+	// INSERT YOUR CODE HERE
+
+	// END XXX
+
+	// after this scenegraph branch
+	// restore previous transformation
+	// XXX
+	// INSERT YOUR CODE HERE
+	glPopMatrix();
+	// END XXX
+
+	// and traverse possible siblings
+	// XXX
+	SceneGraph::traverse(node->getNext());
+	// INSERT YOUR CODE HERE
+
+	// END XXX
 }
 
 void SceneGraph::clear(Node *node){
 
-  if(node == NULL) return;
+	if (node == NULL) return;
 
-  clear(node->getChild());
-  clear(node->getNext());
+	clear(node->getChild());
+	clear(node->getNext());
 
-  delete node;
+	delete node;
 
 }
 
@@ -137,10 +137,17 @@ void SceneGraph::clear(Node *node){
 // XXX: NEEDS TO BE IMPLEMENTED
 void SceneGraph::reset(Node* node){
 
-  // reset rotations
-  // XXX
-  
-  // INSERT YOUR CODE HERE
-  
-  // END XXX
+	// reset rotations
+	// XXX
+	if (node == NULL)
+		return;
+
+	node->rotx = 0.0f;
+	node->roty = 0.0f;
+	node->rotz = 0.0f;
+	SceneGraph::reset(node->getChild());
+	SceneGraph::reset(node->getNext());
+	// INSERT YOUR CODE HERE
+
+	// END XXX
 }

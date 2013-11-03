@@ -88,6 +88,7 @@ void Node::transform(){
 
 	// translate to final position
 	// XXX
+	glTranslatef(this->x, this->y, this->z);
 
 	// INSERT YOUR CODE HERE
 
@@ -95,14 +96,14 @@ void Node::transform(){
 
 	// translate node center to joint position
 	// XXX
-
+	glTranslatef(this->jointx, this->jointy, this->jointz);
 	// INSERT YOUR CODE HERE
 
 	// END XXX
 
 	// apply this node's rotation
-	// XXX
-
+	// XXX 
+	glRotatef(0.0f, this->rotx, this->roty, this->rotz);
 	// INSERT YOUR CODE HERE
 
 	// END XXX
@@ -112,9 +113,8 @@ void Node::transform(){
 
 	// translate center of rotation into limb's origin
 	// XXX
-
+	glTranslatef(this->jointx, this->jointy, this->jointz);
 	// INSERT YOUR CODE HERE
-
 	// END XXX
 }
 
@@ -160,25 +160,29 @@ void Node::drawJoint(){
 
 	// END XXX
 
-	glBegin(GL_LINES);
+	glBegin(GL_LINES); {
 
-	// XXX: DRAW X,Y AND Z AXES IN RED,GREEN AND BLUE
-	//      SEE PROVIDED cg1_ex1.exe (win32) AND cg1_ex1 (linux)
+		// XXX: DRAW X,Y AND Z AXES IN RED,GREEN AND BLUE
+		//      SEE PROVIDED cg1_ex1.exe (win32) AND cg1_ex1 (linux)
 
-	glLineWidth(1.0f);
-	glVertex3f(0.0f, 0.0f, 0.0f); //We need a starting point, but we do not need to reset it every time
+		glLineWidth(1.0f);
 
-	glColor3f(1.0f, 0.0f, 0.0f); // red - x
-	glVertex3f(linelength, 0.0f, 0.0f);
-	glColor3f(0.0f, 1.0f, 0.0f); //green - y
-	glVertex3f(0.0f, linelength, 0.0f);
-	glColor3f(0.0f, 0.0f, 1.0f); //blue - z
-	glVertex3f(0.0f, 0.0f, linelength);
-	// INSERT YOUR CODE HERE
+		glColor3f(1.0f, 0.0f, 0.0f); // red - x
+		glVertex3f(0.0f, 0.0f, 0.0f); //We always draw a line from a starting point to an end point
+		glVertex3f(linelength, 0.0f, 0.0f);
 
-	// END XXX
+		glColor3f(0.0f, 1.0f, 0.0f); //green - y
+		glVertex3f(0.0f, 0.0f, 0.0f);
+		glVertex3f(0.0f, linelength, 0.0f);
 
-	glEnd();
+		glColor3f(0.0f, 0.0f, 1.0f); //blue - z
+		glVertex3f(0.0f, 0.0f, 0.0f);
+		glVertex3f(0.0f, 0.0f, linelength);
+		// INSERT YOUR CODE HERE
+
+		// END XXX
+
+	} glEnd();
 	glPopAttrib();
 }
 
