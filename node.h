@@ -9,7 +9,6 @@
    ------------------------------------------------------------- */
 
 #pragma once
-
 // NOTE: each node in the scenegraph can have multiple 
 //       children/siblings by pointing to its first child via 
 //       the 'child' pointer and then linking up the children 
@@ -54,12 +53,13 @@ public:
 
   // sets the parent of this node
   void setParent(Node* parent);
-
+  unsigned char selectionid;
   //
  protected:
 
   // scenegraph has acces to protected functions
   friend class SceneGraph;
+  friend class Robot;
 
   // destructor
   ~Node();
@@ -68,6 +68,7 @@ public:
   // according to its position, 
   // rotation, and rotation center
   void transform();
+  void selectiontransform();
 
   // draw an individual node
   void draw();
@@ -75,6 +76,11 @@ public:
   // draw the joint (rotation center)
   // of an individual node
   void drawJoint();
+
+  //draw the circles to indicate a gimbal lock
+  void drawRot(); //not from skeleton
+
+  void selectdraw();
 
   // increment / decrement rotation
   void rotate(float x, float y, float z);
@@ -111,7 +117,7 @@ public:
 
   // is node selected?
   bool selected;
-  
+
   // siblings
   Node* next;
   Node* previous;

@@ -40,7 +40,9 @@ SceneGraph::~SceneGraph(){
 void SceneGraph::traverse(){
 	traverse(root);
 }
-
+void SceneGraph::selectiontraverse(){
+	selectiontraverse(this->root);
+}
 // reset all rotations in the scenegraph
 // nothing to do here
 // (see helper function)
@@ -120,6 +122,33 @@ void SceneGraph::traverse(Node *node){
 	// INSERT YOUR CODE HERE
 
 	// END XXX
+}
+
+void SceneGraph::selectiontraverse(Node *node){
+	if (node == NULL) return;
+	glPushMatrix();
+	node->selectiontransform();
+	node->selectdraw();
+	SceneGraph::selectiontraverse(node->getChild());
+	glPopMatrix();
+	SceneGraph::selectiontraverse(node->getNext());
+
+}
+
+void SceneGraph::selectbyid(GLubyte id){
+	this->selectbyid(this->root, id);
+}
+
+void SceneGraph::selectbyid(Node *node, GLubyte id){
+	if (node == NULL)
+		return;
+	if (node->selectionid == id){
+		this->selected->deselect();
+		node->select();
+		this->selected = node;
+	}
+	SceneGraph::selectbyid(node->child, id);
+	SceneGraph::selectbyid(node->next, id);
 }
 
 void SceneGraph::clear(Node *node){

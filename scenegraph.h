@@ -27,6 +27,9 @@ class SceneGraph{
 
   // traverse and draw the scenegraph
   void traverse();
+  void selectiontraverse();
+  void selectbyid(GLubyte id);
+
 
   // navigation in tree
   // (needed for node selection)
@@ -51,7 +54,10 @@ class SceneGraph{
 
   // traverse and draw the scenegraph from a given node
   void traverse(Node *node);
+  void selectiontraverse(Node *node);
+  void selectbyid(Node *node, GLubyte id);
 
+  
   // reset all rotations below given node
   void reset(Node *node);
 

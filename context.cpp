@@ -184,7 +184,9 @@ void Context::keyPressed(unsigned char key, int x, int y){
 	switch (key){
 
 	case 'q':
-	case 'Q': exit(0);
+	case 'Q':
+		exit(0);
+		break;
 	case 'x':
 		sceneGraph->rotate(step, 0, 0);
 		display();
@@ -289,7 +291,7 @@ void Context::menu(int id){
 		break;
 	}
 }
-
+int wasmousemoved = 0;
 // mouse motion
 void Context::mouseMoved(int x, int y){
 
@@ -299,20 +301,43 @@ void Context::mouseMoved(int x, int y){
 		mouseX = x;
 		mouseY = y;
 		display();
+		wasmousemoved = 1;
 	}
 }
 
 // mouse callback
 void Context::mousePressed(int button, int state, int x, int y){
 
-	if (button == GLUT_LEFT) {
-		if (state == GLUT_UP) {
+	if (button == GLUT_LEFT) { 
+		if (state == GLUT_UP && !wasmousemoved) { //Enter mouse picking mode 
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Set up rendering
+			glMatrixMode(GL_MODELVIEW);
+			glLoadIdentity();
+			camera();
+			glPushAttrib(GL_LIGHTING_BIT);
+			glDisable(GL_LIGHTING);
+			glEnable(GL_COLOR_MATERIAL);
+			sceneGraph->selectiontraverse(); //Rendering
+			glFlush();
+
+			GLubyte pixel[3]; //Get the rendered pixel where we clicked
+			glReadPixels(x, width - y, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, (void*)pixel);
+			//cout << (int)pixel[2];
+			//cout << " id clicked \n\n";
+			sceneGraph->selectbyid(pixel[2]); //the id is in the blue value
+
+			glDisable(GL_COLOR_MATERIAL); //restore normal state
+			glEnable(GL_LIGHTING);
+			glPopAttrib();
+			//glutSwapBuffers(); //no display, uncomment for debugging only
+			display(); //normal rendering with selection
 			leftButton = false;
 		}
 		else if (state == GLUT_DOWN) {
 			leftButton = true;
 			mouseX = x;
 			mouseY = y;
+			wasmousemoved = 0;
 		}
 	}
 }
@@ -340,6 +365,7 @@ void Context::registerCallbacks(void){
 	// END XXX
 
 	// XXX: add more options (optional)
+
 
 	// INSERT YOUR CODE HERE
 
