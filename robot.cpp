@@ -31,7 +31,7 @@ Node *buildRobot(){
 		200.0f, 300.0f, 100.0f,
 		0.0f, 0.0f, 0.0f,
 		0.0f, 0.0f, 0.0f);
-	torso->selectionid = (++selectionid);
+	torso->selectionid = ++selectionid; //The selectionid is not in the constructor for no reason at all
 
 
 	// XXX: implement more body/robot/whatever parts here
@@ -41,91 +41,91 @@ Node *buildRobot(){
 		0.0f, 80.0f, 0.0f,
 		0.0f, 0.0f, 0.0f);
 	rightupperarm->setParent(torso);
-	rightupperarm->selectionid = (++selectionid);
+	rightupperarm->selectionid = ++selectionid;
 
 	Node *rightlowerarm = new Node(0.0f, -120.0f, 0.0f,
 		50.0f, 80.0f, 50.0f,
 		0.0f, 50.0f, 0.0f,
 		0.0f, 0.0f, 0.0f);
 	rightlowerarm->setParent(rightupperarm);
-	rightlowerarm->selectionid = (++selectionid);
+	rightlowerarm->selectionid = ++selectionid;
 
 	Node *righthand = new Node(0.0f, -100.0f, 0.0f,
 		70.0f, 50.0f, 20.0f,
 		0.0f, 50.0f, 0.0f,
 		0.0f, 0.0f, 0.0f);
 	righthand->setParent(rightlowerarm);
-	righthand->selectionid = (++selectionid);
+	righthand->selectionid = ++selectionid;
 
 	Node *leftupperarm = new Node(-160.0f, 50.0f, 0.0f,
 		50.0f, 120.0f, 50.0f,
 		0.0f, 80.0f, 0.0f,
 		0.0f, 0.0f, 0.0f);
 	leftupperarm->setParent(torso);
-	leftupperarm->selectionid = (++selectionid);
+	leftupperarm->selectionid = ++selectionid;
 
 	Node *leftlowerarm = new Node(0.0f, -120.0f, 0.0f,
 		50.0f, 80.0f, 50.0f,
 		0.0f, 50.0f, 0.0f,
 		0.0f, 0.0f, 0.0f);
 	leftlowerarm->setParent(leftupperarm);
-	leftlowerarm->selectionid = (++selectionid);
+	leftlowerarm->selectionid = ++selectionid;
 
 	Node *lefthand = new Node(0.0f, -100.0f, 0.0f,
 		70.0f, 50.0f, 20.0f,
 		0.0f, 50.0f, 0.0f,
 		0.0f, 0.0f, 0.0f);
 	lefthand->setParent(leftlowerarm);
-	lefthand->selectionid = (++selectionid);
+	lefthand->selectionid = ++selectionid;
 
 	Node *rightupperleg = new Node(50.0f, -250.0f, 0.0f,
 		60.0f, 150.0f, 60.0f,
 		0.0f, 80.0f, 0.0f,
 		0.0f, 0.0f, 0.0f);
 	rightupperleg->setParent(torso);
-	rightupperleg->selectionid = (++selectionid);
+	rightupperleg->selectionid = ++selectionid;
 
 	Node *rightlowerleg = new Node(0.0f, -150.0f, 0.0f,
 		60.0f, 120.0f, 60.0f,
 		0.0f, 70.0f, 0.0f,
 		0.0f, 0.0f, 0.0f);
 	rightlowerleg->setParent(rightupperleg);
-	rightlowerleg->selectionid = (++selectionid);
+	rightlowerleg->selectionid = ++selectionid;
 
 	Node *rightfoot = new Node(0.0f, -100.0f, 25.0f,
 		50.0f, 20.0f, 100.0f,
 		0.0f, 0.0f, -25.0f,
 		0.0f, 0.0f, 0.0f);
 	rightfoot->setParent(rightlowerleg);
-	rightfoot->selectionid = (++selectionid);
+	rightfoot->selectionid = ++selectionid;
 
 	Node *leftupperleg = new Node(-50.0f, -250.0f, 0.0f,
 		60.0f, 150.0f, 60.0f,
 		0.0f, 80.0f, 0.0f,
 		0.0f, 0.0f, 0.0f);
 	leftupperleg->setParent(torso);
-	leftupperleg->selectionid = (++selectionid);
+	leftupperleg->selectionid = ++selectionid;
 
 	Node *leftlowerleg = new Node(0.0f, -150.0f, 0.0f,
 		60.0f, 120.0f, 60.0f,
 		0.0f, 70.0f, 0.0f,
 		0.0f, 0.0f, 0.0f);
 	leftlowerleg->setParent(leftupperleg);
-	leftlowerleg->selectionid = (++selectionid);
+	leftlowerleg->selectionid = ++selectionid;
 
 	Node *leftfoot = new Node(0.0f, -100.0f, 25.0f,
 		50.0f, 20.0f, 100.0f,
 		0.0f, 0.0f, -25.0f,
 		0.0f, 0.0f, 0.0f);
 	leftfoot->setParent(leftlowerleg);
-	leftfoot->selectionid = (++selectionid);
+	leftfoot->selectionid = ++selectionid;
 
 	Node *head = new Node(0.0f, 250.0f, 0.0f,
 		150.0f, 150.0f, 150.0f,
 		0.0f, -100.0f, 0.0f,
 		0.0f, 0.0f, 0.0f);
 	head->setParent(torso);
-	head->selectionid = (++selectionid);
+	head->selectionid = ++selectionid;
 
 
 	// INSERT YOUR CODE HERE

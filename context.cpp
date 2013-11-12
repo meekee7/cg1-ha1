@@ -117,7 +117,8 @@ void Context::init(int argc, char **argv){
 	cout << " keyboard:                                  \n";
 	cout << " arrow keys: select node                    \n";
 	cout << " x/X,y/Y,z/Z: rotate node                   \n";
-	cout << " r: reset all rotations                     \n";
+	cout << " r/R: reset all rotations                   \n";
+	cout << " g/G: load up gimbal lock preset            \n";
 	cout << " q/Q: quit program                          \n";
 	cout << "                                            \n";
 	cout << " mouse:                                     \n";
@@ -216,11 +217,20 @@ void Context::keyPressed(unsigned char key, int x, int y){
 
 		// INSERT YOUR CODE HERE
 	case 'R':
-	case 'r':
+	case 'r': //perform rotation reset
 		sceneGraph->reset();
 		display();
 		break;
 		// END XXX
+	case 'G':
+	case 'g': //load gimbal lock rotation preset
+		sceneGraph->reset();
+		sceneGraph->selectbyid(1); //1 is the body node, if that assertion wrong then check robot.cpp
+		sceneGraph->rotate(0.0f, 0.0f, 90.0f);
+		sceneGraph->rotate(0.0f, 90.0f, 0.0f);
+		cout << "Gimbal lock demo preset loaded: \nselected body, set z-rotation to 90, set y-rotation to 90 \nnow drag the body or the head around for demonstration \n\n";
+		display();
+		break;
 
 	default:
 		break;
@@ -317,7 +327,7 @@ void Context::mousePressed(int button, int state, int x, int y){
 			glPushAttrib(GL_LIGHTING_BIT);
 			glDisable(GL_LIGHTING);
 			glEnable(GL_COLOR_MATERIAL);
-			sceneGraph->selectiontraverse(); //Rendering
+			sceneGraph->selectiontraverse(); //Rendering for colour coding
 			glFlush();
 
 			GLubyte pixel[3]; //Get the rendered pixel where we clicked
@@ -329,8 +339,8 @@ void Context::mousePressed(int button, int state, int x, int y){
 			glDisable(GL_COLOR_MATERIAL); //restore normal state
 			glEnable(GL_LIGHTING);
 			glPopAttrib();
-			//glutSwapBuffers(); //no display, uncomment for debugging only
-			display(); //normal rendering with selection
+			//glutSwapBuffers(); //no display, uncomment for debugging only and intensify colour codes then
+			display(); //normal rendering with new selection
 			leftButton = false;
 		}
 		else if (state == GLUT_DOWN) {
