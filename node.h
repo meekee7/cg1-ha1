@@ -59,7 +59,6 @@ public:
 
   // scenegraph has acces to protected functions
   friend class SceneGraph;
-  friend class Robot;
 
   // destructor
   ~Node();
@@ -68,7 +67,7 @@ public:
   // according to its position, 
   // rotation, and rotation center
   void transform();
-  void selectiontransform();
+  void selectiontransform(); //same but without drawing the axis and sphere
 
   // draw an individual node
   void draw();
@@ -77,9 +76,7 @@ public:
   // of an individual node
   void drawJoint();
 
-  //draw the circles to indicate a gimbal lock
-  void drawRot(); //not from skeleton
-
+  //draw for the selection rendering mode
   void selectdraw();
 
   // increment / decrement rotation

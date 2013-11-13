@@ -22,8 +22,7 @@
 
 // build the robot scenegraph
 Node *buildRobot(){
-
-	unsigned char selectionid = 0;
+	unsigned char selectionid = 0; //This id will be incremented for every node and assigned to it
 	// torso attributes and initial position.
 	// for parameters of constructor and their meanings,
 	// see file node.h

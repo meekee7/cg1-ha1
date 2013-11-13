@@ -124,6 +124,7 @@ void SceneGraph::traverse(Node *node){
 	// END XXX
 }
 
+//Modified version of the traversion from above, different transformation and drawing is needed
 void SceneGraph::selectiontraverse(Node *node){
 	if (node == NULL) return;
 	glPushMatrix();
@@ -132,23 +133,24 @@ void SceneGraph::selectiontraverse(Node *node){
 	SceneGraph::selectiontraverse(node->getChild());
 	glPopMatrix();
 	SceneGraph::selectiontraverse(node->getNext());
-
 }
 
 void SceneGraph::selectbyid(GLubyte id){
 	this->selectbyid(this->root, id);
 }
 
+//Traverse the graph and look for the node with the id to select it
 void SceneGraph::selectbyid(Node *node, GLubyte id){
 	if (node == NULL)
 		return;
 	if (node->selectionid == id){
-		this->selected->deselect();
-		node->select();
+		this->selected->deselect(); //Like this, there is no deselection with a click into the void
+		node->select(); //Because we only deselect when the node was found
 		this->selected = node;
+		return;
 	}
-	SceneGraph::selectbyid(node->child, id);
-	SceneGraph::selectbyid(node->next, id);
+	SceneGraph::selectbyid(node->child, id); //Recursively try to find the id in siblings and children
+	SceneGraph::selectbyid(node->next, id); //Null test is done above
 }
 
 void SceneGraph::clear(Node *node){

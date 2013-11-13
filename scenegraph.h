@@ -27,7 +27,9 @@ class SceneGraph{
 
   // traverse and draw the scenegraph
   void traverse();
-  void selectiontraverse();
+  void selectiontraverse(); //for selection rendering mode
+
+  //Select the node with the specific id
   void selectbyid(GLubyte id);
 
 
@@ -54,7 +56,9 @@ class SceneGraph{
 
   // traverse and draw the scenegraph from a given node
   void traverse(Node *node);
-  void selectiontraverse(Node *node);
+  void selectiontraverse(Node *node); //draw for selection rendering mode
+
+  //Select the node with the specific id
   void selectbyid(Node *node, GLubyte id);
 
   

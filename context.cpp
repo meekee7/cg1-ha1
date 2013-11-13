@@ -222,15 +222,6 @@ void Context::keyPressed(unsigned char key, int x, int y){
 		display();
 		break;
 		// END XXX
-	case 'G':
-	case 'g': //load gimbal lock rotation preset
-		sceneGraph->reset();
-		sceneGraph->selectbyid(1); //1 is the body node, if that assertion wrong then check robot.cpp
-		sceneGraph->rotate(0.0f, 0.0f, 90.0f);
-		sceneGraph->rotate(0.0f, 90.0f, 0.0f);
-		cout << "Gimbal lock demo preset loaded: \nselected body, set z-rotation to 90, set y-rotation to 90 \nnow drag the body or the head around for demonstration \n\n";
-		display();
-		break;
 
 	default:
 		break;
@@ -318,20 +309,22 @@ void Context::mouseMoved(int x, int y){
 // mouse callback
 void Context::mousePressed(int button, int state, int x, int y){
 
-	if (button == GLUT_LEFT) { 
+	if (button == GLUT_LEFT) {
 		if (state == GLUT_UP && !wasmousemoved) { //Enter mouse picking mode 
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); //Set up rendering
-			glMatrixMode(GL_MODELVIEW);
+			glMatrixMode(GL_MODELVIEW); //Mouse picking is done with the colour coding method
 			glLoadIdentity();
 			camera();
 			glPushAttrib(GL_LIGHTING_BIT);
-			glDisable(GL_LIGHTING);
-			glEnable(GL_COLOR_MATERIAL);
+			glDisable(GL_LIGHTING); //Turn off light
+			glEnable(GL_COLOR_MATERIAL); //Render with specific colours (the ids), not ambient materials
 			sceneGraph->selectiontraverse(); //Rendering for colour coding
-			glFlush();
+			glFlush(); //Optional
 
+			GLint viewportdata[4];
+			glGetIntegerv(GL_VIEWPORT, viewportdata);
 			GLubyte pixel[3]; //Get the rendered pixel where we clicked
-			glReadPixels(x, width - y, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, (void*)pixel);
+			glReadPixels(x, viewportdata[3] - y, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, (GLvoid*)pixel);
 			//cout << (int)pixel[2];
 			//cout << " id clicked \n\n";
 			sceneGraph->selectbyid(pixel[2]); //the id is in the blue value
@@ -339,8 +332,11 @@ void Context::mousePressed(int button, int state, int x, int y){
 			glDisable(GL_COLOR_MATERIAL); //restore normal state
 			glEnable(GL_LIGHTING);
 			glPopAttrib();
-			//glutSwapBuffers(); //no display, uncomment for debugging only and intensify colour codes then
-			display(); //normal rendering with new selection
+
+			//we usually do not show the image that we just rendered
+			//glutSwapBuffers(); //but when we do for debugging, comment display() and intensify the selection ids
+			display(); //normal rendering with updated selection
+
 			leftButton = false;
 		}
 		else if (state == GLUT_DOWN) {

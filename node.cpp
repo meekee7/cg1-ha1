@@ -119,6 +119,8 @@ void Node::transform(){
 	// INSERT YOUR CODE HERE
 	// END XXX
 }
+
+//same as transform, except that we do not call drawJoint()
 void Node::selectiontransform(){
 	glTranslatef(this->x, this->y, this->z);
 	glTranslatef(this->jointx, this->jointy, this->jointz);
@@ -145,8 +147,9 @@ void Node::draw(){
 	glPopAttrib();
 }
 
+//draw for selection rendering mode
 void Node::selectdraw(){
-	glColor3ub(0, 0, this->selectionid); //The colour is put into the blue value
+	glColor3ub(0, 0, this->selectionid); //Colour for rendering, blue value holds the id
 	glPushMatrix();
 	glScalef(this->length, this->height, this->width);
 	glutSolidCube(1.0); //Render cube as usual
@@ -172,11 +175,12 @@ void Node::drawJoint(){
 	// (with glutwiredphere...)
 	// XXX
 	const GLfloat linelength = 100.0f;
-	const int segments = 12;
+	const int segments = 16;
+	const float drad = 2.0f * 3.14159f; //For the circles
 
 	glLineWidth(1.2f);
 	glColor3ub(80, 80, 80);
-	glutWireSphere((GLdouble)(linelength / 2.0f), segments, segments);
+	glutWireSphere((GLdouble)(linelength * 0.5f), segments, segments);
 	// INSERT YOUR CODE HERE
 
 	// END XXX
@@ -190,70 +194,32 @@ void Node::drawJoint(){
 		//glColor3f(1.0f, 0.0f, 0.0f); // red - x
 		glVertex3f(0.0f, 0.0f, 0.0f); //We always draw a line from a starting point to an end point
 		glVertex3f(linelength, 0.0f, 0.0f);
-		for (int i = 0; i < segments; i++){ //And here we draw an additional circle
-			glVertex3f(0, sin(i * segments)*linelength*0.6f, cos(i * segments)*linelength*0.6f);
-			glVertex3f(0, sin((i + 1) * segments)*linelength*0.6f, cos((i + 1) * segments)*linelength*0.6f);
-			}
+		/*for (int i = 0; i < segments; i++){ //And here we draw an additional circle
+			glVertex3f(0, sin(i / float(segments)*drad)*linelength*0.6f, cos(i / float(segments)*drad)*linelength*0.6f);
+			glVertex3f(0, sin((i + 1) / float(segments)*drad)*linelength*0.6f, cos((i + 1) / float(segments)*drad)*linelength*0.6f);
+		}*/
 
 		glColor3ub(0, 255, 0);
 		//glColor3f(0.0f, 1.0f, 0.0f); //green - y
 		glVertex3f(0.0f, 0.0f, 0.0f);
 		glVertex3f(0.0f, linelength, 0.0f);
-		for (int i = 0; i < segments; i++){ //circle
-			glVertex3f(sin(i * segments)*linelength*0.6f, 0, cos(i * segments)*linelength*0.6f);
-			glVertex3f(sin((i + 1) * segments)*linelength*0.6f, 0, cos((i + 1) * segments)*linelength*0.6f);
-			}
+		/*for (int i = 0; i < segments; i++){ //circle
+			glVertex3f(sin(i / float(segments)*drad)*linelength*0.6f, 0, cos(i / float(segments)*drad)*linelength*0.6f);
+			glVertex3f(sin((i + 1) / float(segments)*drad)*linelength*0.6f, 0, cos((i + 1) / float(segments)*drad)*linelength*0.6f);
+		}*/
 
 		glColor3ub(0, 0, 255);
 		//glColor3f(0.0f, 0.0f, 1.0f); //blue - z
 		glVertex3f(0.0f, 0.0f, 0.0f);
 		glVertex3f(0.0f, 0.0f, linelength);
-		for (int i = 0; i < segments; i++){ //circle
-			glVertex3f(sin(i * segments)*linelength*0.6f, cos(i * segments)*linelength*0.6f, 0);
-			glVertex3f(sin((i + 1) * segments)*linelength*0.6f, cos((i + 1) * segments)*linelength*0.6f, 0);
-			}
+		/*for (int i = 0; i < segments; i++){ //circle
+			glVertex3f(sin(i / float(segments)*drad)*linelength*0.6f, cos(i / float(segments)*drad)*linelength*0.6f, 0);
+			glVertex3f(sin((i + 1) / float(segments)*drad)*linelength*0.6f, cos((i + 1) / float(segments)*drad)*linelength*0.6f, 0);
+		}*/
 		// INSERT YOUR CODE HERE
 
 		// END XXX
 
-	} glEnd();
-	glPopAttrib();
-}
-void Node::drawRot(){
-	// save enable bit for lighting
-	// and current bit for color
-	glPushAttrib(GL_ENABLE_BIT | GL_CURRENT_BIT);
-	glLineWidth(1.0f);
-	const GLfloat linelength = 100.0f;
-	const int segments = 16; //TODO make these private properties
-	const float drad = 2.0f * 3.141459f;
-	const float degtorad = 3.141459f / 180.0f;
-	glDisable(GL_LIGHTING);
-	glBegin(GL_LINES); {
-		glPushMatrix();
-		glRotatef(this->rotx, 1.0f, 0.0f, 0.0f);
-		glColor3ub(255, 0, 0);
-		for (int i = 0; i < segments; i++){ //And here we draw an additional circle
-			glVertex3f(/*sin(i / float(segments)*drad)*sin(this->rotx*degtorad)*linelength*0.6f*/0, sin(i / float(segments)*drad)*linelength*0.6f, cos(i / float(segments)*drad)*linelength*0.6f);
-			glVertex3f(/*sin((i + 1) / float(segments)*drad)*sin(this->rotx*degtorad)*linelength*0.6f*/0, sin((i + 1) / float(segments)*drad)*linelength*0.6f, cos((i + 1) / float(segments)*drad)*linelength*0.6f);
-		}
-		glPopMatrix();
-		glPushMatrix();
-		glRotatef(this->roty, 0.0f, 1.0f, 0.0f);
-		glColor3ub(0, 255, 0);
-		for (int i = 0; i < segments; i++){ //circle
-			glVertex3f(sin(i / float(segments)*drad)*linelength*0.6f, /*sin(i / float(segments)*drad)*sin(this->roty*degtorad)*linelength*0.6f*/0, cos(i / float(segments)*drad)*linelength*0.6f);
-			glVertex3f(sin((i + 1) / float(segments)*drad)*linelength*0.6f, /*sin((i + 1) / float(segments)*drad)*sin(this->roty*degtorad)*linelength*0.6f*/0, cos((i + 1) / float(segments)*drad)*linelength*0.6f);
-		}
-		glPopMatrix();
-		glPushMatrix();
-		glRotatef(this->rotz, 0.0f, 0.0f, 1.0f);
-		glColor3ub(0, 0, 255);
-		for (int i = 0; i < segments; i++){ //circle
-			glVertex3f(sin(i / float(segments)*drad)*linelength*0.6f, cos(i / float(segments)*drad)*linelength*0.6f, /*sin(i / float(segments)*drad)*sin(this->rotz*degtorad)*linelength*0.6f*/0);
-			glVertex3f(sin((i + 1) / float(segments)*drad)*linelength*0.6f, cos((i + 1) / float(segments)*drad)*linelength*0.6f, /*sin((i + 1) / float(segments)*drad)*sin(this->rotz*degtorad)*linelength*0.6f*/0);
-		}
-		glPopMatrix();
 	} glEnd();
 	glPopAttrib();
 }
